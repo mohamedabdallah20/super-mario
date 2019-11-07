@@ -1,0 +1,8 @@
+void set_texture_sprite (Texture &texturename , string place , Sprite &spritename )
+{
+     if(!texturename.loadFromFile(place))
+    {
+        cout<<"error failed to load image \n";
+    }
+    spritename.setTexture(texturename);
+}

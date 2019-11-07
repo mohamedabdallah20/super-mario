@@ -1,0 +1,261 @@
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <vector>
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+using namespace sf;
+string TileMap[18] =
+    {
+        "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+        "r                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             r",
+        "r                                                                                                                                                                                                                                                       b                                                                                                                                                                           b                                                                                                                                                                                               b                                                                                                                                                                                                                                                         r",
+        "r                 w                                                                                     w                                                            bbbbbbbbbbb                                                                   bbbbbbbbbbb                                           w                               w                                                                                            b                                                     bbbb                                                                                                                                   b                             w                                              w                                                                                                                                                                             r",
+        "r                                        w                                                                                                                           b         b                                                                   b         b                                                           k                                                                                                              b                                                  b    b                         t0                                       kkkkkk                                                         b                                                                                                   r           r   rrrrrrrrr  rrrrrrrrr     rrr rrrrrrrrr                                                                                                  r",
+        "r                                                                                   kk                                                                               b         b                                                                   bbbbbbbbbbb                                                                                                                                               b                            b                                               b      b                        00                                                                                                     b                  k            w                  t0                          w                     r r       r r   r          r        r     r  r       r                                                                                                  r",
+        "r                                                                                  k  k    k k                                                                       b         b                                                                                                                                                                                                                            b b                             b                                            b        b                       00                                                                                                    b                 k                                 00                                                r  r     r  r   r                         r  r       r                                                                                                  r",
+        "r         w                                                                        c      kkkkk                          bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb         bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb                           kkk                            bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb b          b b                 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb          bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb                          bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb                k                bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb                     r   r   r   r   r       r                                                                                                                               r",
+        "r                                                                       r          k       k k                          b                                                                                                                                                                    b                                                        b                                                       b         b   b                                                                                                                            b                         b                                                          k                                                                                       r    r r    r   rrrrrrrrr  rrrrrrrrr                                                                                                                    r",
+        "r                                             kckck                    rr          k  k   kkkkk                        b                                                                                                                                                                      b                                                      b                                                        b          b b                                   kk      kk                                                                                b                         b                                                        k                                                                                         r     r     r   r       r  r        r     r  r       r                                                                                                  r",
+        "r                                                                     rrr           kk     k k                                                                                                                                                kkkkkk                                                            kkk             kkk                                                                                                                                kk                                                                                    bbbbbbbb         bbbbbbbbbb                                                      k                                                                                           r           r   r       r  r         r    r  r       r                                                                                                  r",
+        "r                    kckck                                           rrrr                                                                              kkkkkkkkkkkkkkkkckkkkkkkkkkkkkkkkk                                           kkkkkk                                                                                                                                                                                                                       kk  kk                                                                                                                                                                 k                                                                                             r           r   r       r  r          r   r  r       r         r                                                                                        r",
+        "r                                      t0                           rrrrr                                           b                                                                                                     kkkkkk                                                                 b                                                b                                                                                                                kk                                                         t0                                                                                                      k                                     kkkckkkckkkckkkckkk                                       r           r   r       r  r           r rrr rrrrrrrrr         r                                    t0                              t0                  r",
+        "r                                      00              t0          rrrrrr                                t0        b                                                                                             kkkkkk                                                                           b                                              b                            t0                              b                                                kk      kk                                                     00                                                                                                    k                                                                                                                                                                                                     00                              00                  r",
+        "r                                      00              00         rrrrrrr                                00       b                                                                                                                                                                                b                                            b                             00                              b                                                                                                               00                                                                                                  k                                                                                                                                                                                                       00                              00                  r",
+        "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+        "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+    };
+
+//   Coins in this map
+    string Tilecoin[18] =
+    {
+        "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+        "r                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             r",
+        "r                                                                                                                                                                    uuuu   uuuu                                                                                                                                         u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    r",
+        "r                                                                                                                                                                                                          uuu                      u  u                                                                                                                                                                                                              uuuuuuuuuu  uuuuu                                                                                                                                                                                                u   u     u    u    u                                                                                                                                                                                                  r",
+        "r                                                                                                                                                                                                    uuu                     u  u                   uuuuuuuuu                                                                                                                                                u                                                                                                                                                                                                                                     u                        u       u                                                                                                                                                                                   uuuuuuu               r",
+        "r              uuuuuuuu                                                            u                                             uuuu  uuuu     u uuuu  uuuuuuuuuuu                             uu                     u  u                                                                                             uuu                                                                                u   u                                                                                                                                                                                                                                 u                       u    u   u    u                                                               uuuuuuu    uuuuuuuu          uuuuuuu                                                                                                   r",
+        "r                                                                                                                                                                                                                                                   uuuuuuuuu                                                                                                                                             u    u                                                                                                     uuuuuuuuuuuuuuuuuuuuu                                                                                                     u                       u        u         u                                                            uuuuuuu    uuuuuuuu          uuuuuuu                                                                                                   r",
+        "r                                                                                   uu                                                                                                                                                                                                                                                                                                                         u                                                                                                                                                                                                                             u                                          u                                                              uuuuuuu    uuuuuuuu          uuuuuuu                                                     uuuuuuu                                       r",
+        "r                                             uuuuu                                 uu      u                                                                                                                                       uuuuuu                                                                      uuu             uuu                                                                            u         uuu                                                                                                                                                                                                               u                                         uu   uu                                                                                        uuuuuuu                                                                                                   r",
+        "r                                                                                   uu                                                                      uuuuuuuuuuuu   uuuuuuuuuuu                                    uuuuuu                                                                                                                                                                               u                                                                                                                                                                                                                         u                                       uuu         uuu                                                                                    uuuuuuu                                          uuuuuuu                                                  r",
+        "r                    uuuuu                                                                                                                                                                                                                                                                                                                                                                                     u                                                                                         uu    uu    uuu    uu   uu                                                                                                    u                                    uuuu                 uuuu                                  uuuuuuuuuuu                                  uuuuuuu                                                                                                   r",
+        "r                                                                                                                                                                                                                uuuuuu                                                                                                                                                                                        u                                                   uu                                                                                                                                                                u                                                                                                 uuuuuuuuuuu                                  uuuuuuu                                                                      uuuuuuu                      r",
+        "r                                                                                                                                                                                                                                                                                                                                                                                                              u                                                                                                                                                                                                                   u                                                                                                   uuuuuuuuuuu                                                                                                                                            r",
+        "r                                                        uuuuuu                                                                                                                                                                                                                                                                                                                                                u                                                                                                                                                                                                                 u                                                                                                                                                                                                                                                            r",
+        "r                                                                                                                                                                                                                                                                                                                                                                                                              u                                                                                                                                                                                                                                                                                                                                                                                                                                                                              r",
+        "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    };
+
+struct playerinfo
+{
+    /*struct samplestruct_lessThan
+    {
+        bool operator<( const playerinfo& a, const playerinfo&b ){
+        return a.playerscore < b.playerscore;
+    }
+    };*/
+    string playername;
+    int playerscore;
+    // int rannk;
+};
+
+const string gameover= "game over";
+const string awesome= "AWESOME";
+const string nice= "NICE";
+const string badluck= "BAD LUCK";
+
+const string blockplace="photos/Block.png";
+const string backgroundplace="photos/road.jpg";
+const string fontplace="fonts/GoSpeeds.ttf";
+const string cursorplace ="photos/cursor.png";
+
+vector<playerinfo> ListOfPlayer(10);
+playerinfo player;
+
+void set_text_font(Font &font, Text&text, int sizee, int position_x, int position_y, string setstring, string place)
+{
+    if(!font.loadFromFile(place))
+    {
+        cout<<"error loading font \n";
+    }
+    text.setCharacterSize(sizee);
+    text.setFont(font);
+    text.setPosition(position_x,position_y);
+    text.setString(setstring);
+}
+
+void set_texture_sprite (Texture &texturename, string place, Sprite &spritename )
+{
+    if(!texturename.loadFromFile(place))
+    {
+        cout<<"error failed to load image \n";
+    }
+    spritename.setTexture(texturename);
+}
+
+bool compare(playerinfo player )
+{
+    return  player.playerscore < player.playerscore ;
+}
+
+/*void sortstruc(vector <playerinfo> vec[])
+{
+    int si=vec.size();
+   for(int i=0;i< si;i++)
+   {
+    for(int j=0;j<si-1;j++)
+    {
+        if(vec[j].playerscore<vec[j+1].playerscore)
+        {
+            long long x;
+            x=vec[j].playerscore;
+            vec[j].playerscore=vec[j+1].playerscore;
+            vec[j+1].playerscore=x;
+
+        }
+    }
+   }
+}*/
+
+void computeRanks(playerinfo player)
+{
+    ListOfPlayer.push_back(player);
+}
+void printMap(Sprite& tile, RenderWindow& window)
+//void printMap(Sprite& tile, Sprite& coins, RenderWindow& window)
+{
+	//  Coins in here
+/*	for (int i = 0; i < 18; i++)
+	for (int j = 0; j < 864; j++)
+	{
+		if (TileMap1[i][j] == 'u')  coins.setTextureRect(IntRect(0, 0, 50, 50));  //   Coins
+		if (TileMap2[i][j] == ' ' || TileMap2[i][j] == '0' || TileMap2[i][j] == 'r') continue;
+
+		coins.setPosition(j * 16 - offsetX, i * 16 - offsetY);
+		window.draw(coins);
+	}  */
+
+	//  ForeScreen Tiles
+	for (int i = 0; i < 18; i++)
+	for (int j = 0; j < 864; j++)
+	{
+		if (TileMap[i][j] == 'P') {  window.draw(tile);  tile.setTextureRect(IntRect(143 - 16 * 3, 112, 17, 17));  }
+		if (TileMap[i][j] == 'r') { window.draw(tile);  tile.setTextureRect(IntRect(143 - 16 * 3, 112, 17, 17));}
+//		if (TileMap1[i][j] == 'k')  tile.setTextureRect(IntRect(143, 112, 16, 16));  //   Air Bricks
+	//	if (TileMap1[i][j] == 'w')  tile.setTextureRect(IntRect(99, 224, 140 - 99, 255 - 224));  //  Clouds
+		//if (TileMap1[i][j] == 'b')  tile.setTextureRect(IntRect(143, 112 + 16, 16, 16));  //   Air Bricks
+//		if (TileMap1[i][j] == 'c')  tile.setTextureRect(IntRect(143 - 16, 112, 16, 16));  //    Question marks
+	//	if (TileMap1[i][j] == 't')  tile.setTextureRect(IntRect(0, 47, 32, 95 - 47));  //   Tunnels
+		//if (TileMap1[i][j] == ' ' || TileMap1[i][j] == '0') continue;
+
+    tile.setPosition(j * 16 , i * 16 );
+     tile.setScale(Vector2f(0.89,0.89));
+
+	}
+}
+int main ()
+{
+    /* ifstream input_file("output.text");
+     if (input_file.is_open())
+     {
+         while (input_file>>player.playername>>player.playerscore)
+         {
+             computeRanks(player);
+         }
+         sortstruc(ListOfPlayer);
+         input_file.close();
+     }
+     ofstream output_file;
+    output_file.open("output.text");
+     for(int i=0 ; i<ListOfPlayer.size(); i++)
+     {
+          output_file
+          <<ListOfPlayer.back().playername
+          <<'\t'
+          <<ListOfPlayer.back().playerscore
+          <<endl;
+         ListOfPlayer.pop_back();
+     }*/
+
+    Font font ;
+    Text text;
+    set_text_font(font,text,50,300,300,gameover,fontplace);
+
+    RenderWindow win(VideoMode(1500,800), "SFML window");
+
+
+    Texture tiletex;
+    Sprite blocks;
+    set_texture_sprite(tiletex,blockplace,blocks);
+
+    Texture cursor;
+    Sprite cursorr;
+    set_texture_sprite(cursor,cursorplace,cursorr);
+    cursorr.setScale(Vector2f(0.04,0.04));
+
+    int x,y;
+    bool isgameover=false;
+    bool isclocke=true;
+
+    Time tim;
+    Clock clo;
+    int ttt;
+    while (win.isOpen())
+    {
+        // cout<<ttt;
+        tim=clo.getElapsedTime();
+        ttt=tim.asSeconds();
+        if(isclocke)
+        {
+            clo.restart();
+        }
+        win.setMouseCursorVisible(false);
+
+        Event event;
+
+        x=Mouse::getPosition(win).x;
+        y=Mouse::getPosition(win).y;
+
+        cursorr.setPosition(Vector2f(x,y));
+
+        while (win.pollEvent(event))
+        {
+
+            if (event.type == Event::Closed)
+                win.close();
+            if (event.key.code==Keyboard::Escape)
+                win.close();
+            if (event.key.code==Keyboard::M)
+            {
+                isgameover=true;
+                isclocke=false;
+
+            }
+        }
+        cout<<ttt<<endl;
+        if (ttt==3)
+        {
+
+            isgameover=false;
+            isclocke=true;
+        }
+
+        win.clear();
+        printMap(blocks,win);
+        if(isgameover)
+        {
+            win.draw(text);
+        }
+        win.draw(cursorr);
+        win.display();
+    }
+
+    return 0;
+}
+
+

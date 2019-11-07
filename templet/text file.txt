@@ -1,0 +1,58 @@
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <vector>
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+using namespace sf;
+struct playerinfo
+{
+    string playername;
+    int playerscore;
+   // int rannk;
+};
+
+vector<playerinfo> ListOfPlayer;
+playerinfo player;
+
+bool compare (playerinfo p1,playerinfo p2)
+{
+    return p1.playerscore < p2.playerscore;
+}
+
+void computeRanks(playerinfo player)
+{
+    ListOfPlayer.push_back(player);
+}
+int main ()
+{
+    ifstream input_file("output.text");
+    if (input_file.is_open())
+    {
+        while (input_file>>player.playername>>player.playerscore)
+        {
+        computeRanks(player);
+        }
+        input_file.close();
+    }
+        sort(ListOfPlayer.begin(),ListOfPlayer.end(),compare);
+    ofstream output_file;
+   output_file.open("output.text");
+    for(int i=ListOfPlayer.size()-1 ; i>=0; i--)
+    {
+         output_file
+         <<ListOfPlayer[i].playername
+         <<'\t'
+         <<ListOfPlayer[i].playerscore
+         <<endl;
+
+         cout
+         <<ListOfPlayer[i].playername
+         <<'\t'
+         <<ListOfPlayer[i].playerscore
+         <<endl;
+
+        //ListOfPlayer.pop_back();
+    }
+}

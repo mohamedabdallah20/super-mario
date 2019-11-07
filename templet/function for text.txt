@@ -1,0 +1,21 @@
+void set_text_font(Font &font , Text&text , int sizee , int position_x , int position_y , string setstring , string place)
+{
+    if(!font.loadFromFile(place))
+    {
+        cout<<"error loading font";
+    }
+    text.setCharacterSize(sizee);
+    text.setFont(font);
+    text.setPosition(position_x,position_y);
+    text.setString(setstring);
+}
+
+
+
+
+
+Font font ;
+    Text text;
+    string gameover="gaveover";
+    string fontplace="fonts/GoSpeeds.ttf";
+    set_text_font(font,text,50,300,300,gameover,fontplace);

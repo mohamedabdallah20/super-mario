@@ -1,0 +1,90 @@
+ bool isgameover=false;
+    bool isclocke=true;
+
+        Time tim;
+        Clock clo;
+        int ttt;
+
+
+if(isclocke)
+        {
+        clo.restart();
+        }
+
+
+
+
+ if (event.key.code==Keyboard::M)
+            {
+                isgameover=true;
+                isclocke=false;
+
+                tim=clo.getElapsedTime();
+                ttt=tim.asSeconds();
+            }
+            if (event.key.code==Keyboard::Space)
+            {
+                clo.restart();
+                isgameover=false;
+                isclocke=true;
+            }
+
+
+
+
+
+
+
+
+
+ if(isgameover==true)
+        {
+            window.draw(text);
+        }
+
+
+
+
+-------------------------------------------------------------------------------------------
+
+ bool isgameover=false;
+    bool isclocke=true;
+
+        Time tim;
+        Clock clo;
+        int ttt;
+
+
+
+
+
+
+
+// cout<<ttt;
+        tim=clo.getElapsedTime();
+        ttt=tim.asSeconds();
+        if(isclocke)
+        {
+        clo.restart();
+        }
+
+even{
+if (event.key.code==Keyboard::M)
+            {
+                isgameover=true;
+                isclocke=false;
+
+            }
+   }
+     cout<<ttt<<endl;
+            if (ttt==3)
+            {
+
+                isgameover=false;
+                isclocke=true;
+            }
+
+      if(isgameover)
+        {
+            window.draw(text);
+        }

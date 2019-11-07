@@ -1,0 +1,187 @@
+Sprite Sprite;
+
+	Sprite.SetImage(Image);     
+
+	float x = 400.0;
+
+	float y = 300.0;
+
+	Sprite.SetPosition(x, y);
+
+	float gravity = -4;
+
+	float velocity = 10.0;
+
+	float acceleration = 10.0;
+
+	Event Event;
+
+	bool jumping = false;
+
+	
+
+	
+
+	Window.Draw(Sprite);
+
+	Window.Display();
+
+	
+
+	while(Window.IsOpened())
+
+	{
+
+		Window.Clear();
+
+		Window.Draw(Sprite);
+
+		Window.Display();
+
+	
+
+		while(Window.GetEvent(Event))
+
+		{
+
+		
+
+
+
+			while(jumping == true)
+
+		{
+
+			Sprite.Move(0, -(velocity + acceleration));
+
+			acceleration -= gravity;
+
+			velocity += acceleration;
+
+		}
+
+
+
+		
+
+
+
+		if(velocity <= -5)
+
+		{ 
+
+			velocity = 10.0;
+
+			acceleration = 10.0;
+
+			jumping = false;
+
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+     if(Window.GetInput().IsKeyDown(sf::Key::Left))
+
+		{
+
+			
+
+			Sprite.Move(-1, 0);
+
+			
+
+
+
+						
+
+		}
+
+		else if(Window.GetInput().IsKeyDown(sf::Key::Right))
+
+		{
+
+			
+
+			Sprite.Move(1,0);
+
+			
+
+						
+
+		}
+
+		else if(Window.GetInput().IsKeyDown(sf::Key::Down))
+
+		{
+
+			
+
+			Sprite.Move(0,1);
+
+			
+
+						
+
+		}
+
+
+
+		else if(Window.GetInput().IsKeyDown(Key::Up))
+
+		{
+
+		Sprite.Move(0,-1);
+
+		jumping = true;
+
+			
+
+						
+
+
+
+		}
+
+		else if((Window.GetInput().IsKeyDown(sf::Key::Up)) && (Window.GetInput().IsKeyDown(sf::Key::Left)))
+
+		{
+
+			Sprite.Move(-1.0,1.0);
+
+			
+
+		}
+
+		
+
+						
+
+		
+
+		}
+
+
+
+	
+
+
+
+		
+
+		
+
+		}

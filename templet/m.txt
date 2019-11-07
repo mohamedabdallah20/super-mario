@@ -1,0 +1,145 @@
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <iostream>
+
+using namespace std;
+using namespace sf;
+int main ()
+{
+    RenderWindow window(VideoMode(800, 600), "SFML window");
+
+    Time timemess= seconds(1);
+    
+    Font font ;
+    if(!font.loadFromFile("fonts/GoSpeeds.ttf"))
+    {
+        cout<<"error loading font";;
+    }
+    Text text;
+    text.setCharacterSize(50);
+    text.setFont(font);
+    text.setPosition(300,300);
+    text.setString("Game Over!!");
+
+
+  
+    Texture backk;
+    if(!backk.loadFromFile("photos/road.jpg"))
+    {
+        return EXIT_FAILURE;
+    }
+    Sprite background(backk);
+
+    Texture cursor;
+    if (!cursor.loadFromFile("photos/cursor.png"))
+    {
+        return EXIT_FAILURE;
+    }
+    Sprite cursorr (cursor);
+    cursorr.setScale(Vector2f(0.04,0.04));
+
+    int x,y;
+
+    while (window.isOpen())
+    {
+        window.setMouseCursorVisible(false);
+
+        Event event;
+
+        x=event.mouseMove.x;
+        y=event.mouseMove.y;
+
+        cout<<x<<' '<<y<<endl;
+
+        cursorr.setPosition(Vector2f(x,y));
+
+        while (window.pollEvent(event))
+        {
+
+            if (event.type == Event::Closed)
+                window.close();
+            if (event.key.code==Keyboard::Escape)
+                window.close();
+            if (event.key.code==Keyboard::M)
+            {
+
+                while(event.key.code!=Keyboard::Enter)
+                {
+                    cout<<"bbbbbbbbbbb";
+                    window.clear();
+                    window.draw(text);
+                    window.display();
+                }
+
+            }
+        }
+
+
+
+        window.clear();
+        window.draw(background);
+        window.draw(cursorr);
+        window.display();
+    }
+
+
+}
+
+/*    //    background
+   Texture background;
+   if(!background.loadFromFile("Screenshot.png"))
+   {
+       return EXIT_FAILURE;
+   }
+   Sprite backsp (background);
+
+
+   //    pac
+
+
+
+     Texture pacman;
+      if (!pacman.loadFromFile("59982.png"))
+      {
+          return EXIT_FAILURE;
+      }
+      Sprite pac (pacman);
+
+
+      double x=960,y=800;
+    while(win.isOpen())
+    {
+      pac.setPosition(Vector2f(x,y)) ;
+      Event eve;
+      while(win.pollEvent(eve))
+      {
+         if (eve.key.code==Keyboard::Escape)
+                 win.close();
+         if (eve.key.code==Keyboard::Up)
+                  y-=10;
+         if (eve.key.code==Keyboard::Left)
+                  x-=10;
+         if (eve.key.code==Keyboard::Right)
+                  x+=10;
+         if(eve.key.code==Keyboard::Down)
+                  y+=10;
+         if(eve.key.code==Keyboard::Space)
+         {
+              y-=50;
+              for(int i=0;i<50;i++)
+              {
+                  y+=0.5;
+              }
+         }
+
+
+      }
+
+
+
+          win.clear();
+          win.draw(backsp);
+          win.draw(pac);
+          win.display();
+    }    */
+

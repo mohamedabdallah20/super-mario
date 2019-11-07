@@ -1,0 +1,104 @@
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <iostream>
+#include <thread>
+#include <SFML/System.hpp>
+using namespace std;
+using namespace sf;
+
+void gameover(RenderWindow &window)
+{
+     Font font ;
+    if(!font.loadFromFile("fonts/GoSpeeds.ttf"))
+    {
+        cout<<"error loading font";
+    }
+    Text text;
+    text.setCharacterSize(50);
+    text.setFont(font);
+    text.setPosition(300,300);
+    text.setString("Game Over!!");
+
+    window.clear();
+    window.draw(text);
+    window.display();
+}
+
+
+
+int main ()
+{
+    RenderWindow window(VideoMode(600, 800), "SFML window");
+
+    Thread threat(gameover,ref(window));
+
+    Font font ;
+    if(!font.loadFromFile("fonts/GoSpeeds.ttf"))
+    {
+        cout<<"error loading font";
+    }
+    Text text;
+    text.setCharacterSize(50);
+    text.setFont(font);
+    text.setPosition(300,300);
+    text.setString("Game Over!!");
+
+
+
+
+    Texture backk;
+    backk.setRepeated(true);
+    if(!backk.loadFromFile("photos/road.jpg"))
+    {
+        return EXIT_FAILURE;
+    }
+    Sprite background(backk);
+    background.setTextureRect(IntRect(0,50000,600,6000000));
+    int yy=-5999488;
+
+
+    Texture cursor;
+    if (!cursor.loadFromFile("photos/cursor.png"))
+    {
+        return EXIT_FAILURE;
+    }
+    Sprite cursorr (cursor);
+    cursorr.setScale(Vector2f(0.04,0.04));
+
+    int x,y;
+
+    while (window.isOpen())
+    {
+        window.setMouseCursorVisible(false);
+
+        Event event;
+        background.setPosition(Vector2f(0,yy));
+        yy=yy+7;
+
+        x=event.mouseMove.x;
+        y=event.mouseMove.y;
+
+     // cursor position   cout<<x<<' '<<y<<endl;
+
+        cursorr.setPosition(Vector2f(x,y));
+
+        while (window.pollEvent(event))
+        {
+
+            if (event.type == Event::Closed)
+                window.close();
+            if (event.key.code==Keyboard::Escape)
+                window.close();
+            if (event.key.code==Keyboard::M)
+                threat.launch();
+        }
+
+            window.clear();
+            window.draw(background);
+            window.draw(cursorr);
+            window.display();
+        }
+
+        return 0;
+    }
+

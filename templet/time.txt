@@ -1,0 +1,34 @@
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <iostream>
+
+using namespace std;
+using namespace sf;
+int main ()
+{
+    RenderWindow window(VideoMode(800, 600), "SFML window");
+
+    Clock clock ;
+         Time tt=seconds(50);
+    while (window.isOpen())
+    {
+        Event event;
+        Time t=clock.getElapsedTime();
+        cout<<(int)t.asSeconds()<<':'<<tt.asSeconds()<<endl;
+        while (window.pollEvent(event))
+        {
+            if(Event::KeyReleased)
+            {
+            if (event.key.code==Keyboard::Space)
+            {
+                clock.restart();
+                Time ttt=seconds(10);
+               tt=tt+ttt;
+            }
+
+            }
+        }
+        if((int)t.asSeconds()==5)
+            break;
+    }
+}
